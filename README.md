@@ -37,43 +37,37 @@ student_count = school_data_complete_df["Student ID"].count()
 
 new_student_count = student_count - thomas_ninth
 ```
-After new average scores were calculated utilizing the updated student count, we were able to aggregate our data and compile it once more in a district summary:
-
-
-
-In the course of the secondary analysis, the following questions were addressed:
+After new average scores were calculated utilizing the updated student count, we were able to aggregate our data and compile it once in the course of the secondary analysis to answer the following questions:
 
 * How was the district summary affected?
+    * Originally, our district summary looked like:
+    
+    INSERT IMAGE HERE
+    
+    After the updated analysis, the following is observed:
+    
+    INSERT IMAGE HERE
+    
+    As demonstrated, the overall average math and reading scores changed very little and the same is true for the percentage of students passing within the three categories. 
+    
 * How was the school summary affected?
+    * The school summary is where we can immediately see the impact of the removal of the ninth-grade math and reading scores. Here we can see the old school summary (Thomas High School highlighted):
+    
+    INSERT IMAGE HERE
+    
+    And now the new school summary (Thomas High School highlighted):
+    
+    We we can see, there is a dramatic difference in the passing percentages between the two DataFrames. In terms of an analysis of the data itself, it seems that a large portion of ninth-grade students did not actually pass their math and reading sections (which, when removed, impacted the percentage of passing students dramatically). We raise two questions based on this information:
+    
+        1) Based on the impact of the removal of ninth-grade reading and math scores, it appears as though many of the scores removed were less than passing. If students were altering their scores to improve them,  in the ninth grade, A very large number of students in the ninth grade had actually not passed 
+        2) 
+
 * How did replacing the ninth graders' math and reading scores affect Thomas High School's performance relative to the other schools?
 * How did replacing the ninth grade math and reading scores affect the following:
     * Math and reading scores by grade
     * Scores by school spending
     * Scores by school size
     * Scores by school type
-
-
-
-
-
-
-
-the following:
-* Creation of a summary of the school district including the following data:
-    * Total number of schools in the disctrict.
-    * Total number of students in the district.
-    * Total school district budget.
-    * Scores of the following metrics:
-        * The average math score achieved by a student in the school district.
-        * The average reading score achieved by a student in the school district.
-        * The percentage of students who made a passing math score.
-        * The percentage of students who made a passing reading score. 
-        * The percentage of students who made both a passing math and reading score. 
-* Creation of a summary by school 
-    * Containing the information above but sectioned by individual school.
-    * Adding in a per-student budget analysis based on the total school budget.
-
-From here, it was possible to continue the data analysis to determine how the schools performed relative to each other. In our case, we wanted to determine the school's overall passing rate on both math and reading scores. We sorted our lists to create:
 
 * The top performing school based on overall percentage of students who passed math and reading - Cabrera High School
 * The lowest performing school based on overall percentage of students who passed math and reading - Rodriguez High School
