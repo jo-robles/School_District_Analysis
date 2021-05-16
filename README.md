@@ -21,6 +21,10 @@ student_data_df.loc[(student_data_df['school_name'] == 'Thomas High School') & (
 ```
 As indicated in the code above, the ```.loc``` attribute was utilized in the ```student_data_df``` pandas DataFrame to find rows where the school's name was "Thomas High School”, and the grade was "9th". From there, the reading (or math score) was referenced and ```np.nan``` was utilized to change the value to NaN to ensure that the score was removed. 
 
+We then verified that we had successfully done so by reviewing the ```student_data_df``` pandas DataFrame:
+
+![Successful NaN](https://github.com/jo-robles/School_District_Analysis/blob/a731d5e9d3049bc04a01f042f7164f29984789a8/Resources/replacement.PNG)
+
 After this step was completed, it was necessary to recalculate the averages based on the new number of students that would be accounted for in Thomas High School. To begin, we calculated the number of ninth graders in Thomas High School:
 
 ```
