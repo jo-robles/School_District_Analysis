@@ -37,18 +37,16 @@ student_count = school_data_complete_df["Student ID"].count()
 
 new_student_count = student_count - thomas_ninth
 ```
-After new average scores were calculated utilizing the updated student count, we were able to aggregate our data and compile it once in the course of the secondary analysis to answer the following questions:
+As we are concerned about the impact of the passing rates of students, we would utilize this updated student count to determine the new rate of students who passed their reading and math sections. From there, we reviewed the resulting dataframes to answer the following quesitons:
 
 * How was the district summary affected?
-    * Originally, our district summary looked like:
-    
-    INSERT IMAGE HERE
+    * Taking a look at our new district summary, we can assume that the resulting DataFrame has been impacted simply from taking a look at our school summary. While the resulting averages would not be impacted (as the new averages would simply be calculated from the students in the dataset where data was present), the percentages of passing students would be affected. 
     
     After the updated analysis, the following is observed:
     
     INSERT IMAGE HERE
     
-    As demonstrated, the overall average math and reading scores changed very little and the same is true for the percentage of students passing within the three categories. 
+    As demonstrated, the overall average math and reading scores changed very little however the percentage of students passing is somewhat impacted.  
     
 * How was the school summary affected?
     * The school summary is where we can immediately see the impact of the removal of the ninth-grade math and reading scores. Here we can see the old school summary (Thomas High School highlighted):
@@ -57,22 +55,72 @@ After new average scores were calculated utilizing the updated student count, we
     
     And now the new school summary (Thomas High School highlighted):
     
-    We we can see, there is a dramatic difference in the passing percentages between the two DataFrames. In terms of an analysis of the data itself, it seems that a large portion of ninth-grade students did not actually pass their math and reading sections (which, when removed, impacted the percentage of passing students dramatically). We raise two questions based on this information:
+    INSERT IMAGE HERE
     
-        1) Based on the impact of the removal of ninth-grade reading and math scores, it appears as though many of the scores removed were less than passing. If students were altering their scores to improve them,  in the ninth grade, A very large number of students in the ninth grade had actually not passed 
-        2) 
+    We we can see, there is a dramatic difference in the passing percentages between the two DataFrames. In terms of an analysis of the data itself, it appears as though many of the students in the ninth-grade dataset for Thomas High School may have not met the criteria of 70% or higher. A deeper diver into the dataset (such as a statistical analysis) would be warranted to determine the exact cause however and that would be outside the scope of this analysis. 
 
 * How did replacing the ninth graders' math and reading scores affect Thomas High School's performance relative to the other schools?
+    * In this particular case, by replacing the math and reading scores for Thomas High School in the ninth grade, greatly improved the performance of the school relative to others. For example, now Thomas High School is in the top 5 schools:
+    
+    INSERT NEW RANKINGS HERE
+    
 * How did replacing the ninth grade math and reading scores affect the following:
     * Math and reading scores by grade
+        * To answer this, let's take a look at what the old analysis yielded for the reading scores by grade DataFrame:
+    
+    INSERT Reading old here
+    
+    And when we compare this to the new DataFrame:
+    
+    INSERT new reading here
+    
+    We see that replacing the scores in the ninth-grade for Thomas High School (beyond just not being able to compare them for that grade) did little for the impact. The results are the same for the math scores. Additionally, since we only removed one set of data from the 9th graders, it would stand to reason that other grades would not be impacted.  
+
     * Scores by school spending
+        * In terms of spending by school size, we can make an assumption that while averages would not be impacted (as they simply wouldn't be in the calculation of the averages (as demonstrated earlier)), the passing percentages would be. To demonstrate this, we created the bins and averages of the dataframe:  ```per_school_summary_df``` utilizing the following code:
+        
+        ```
+        # Establish the spending bins and group names.
+
+        spending_bins = [0,585,630,645,675]
+        spending_names = ['<$584', '$585-629', '$630-644', '$645-675']
+
+        # Categorize spending based on the bins.
+        per_school_summary_df['Spending Ranges (Per Student)'] = pd.cut(per_school_capita, spending_bins, labels=spending_names)
+        
+        #Averaging based on column
+        spending_math_scores = per_school_summary_df.groupby(['Spending Ranges (Per Student)']).mean()['Average Math Score']
+        ```
+        The results is the following:
+        
+        INSERT IMAGE HERE
+        
+        As we know that the overall percentages were impacted from Thomas High School, and further, from the previous dataframe, we know that the school spends $638.00 per student, we can make an assumption that the impact of removing the ninth-graders from Thomas High School which increased the overall passing percentage, we can make the assumption that it will be the spending range - "$630 - 644" that would be the one impacted and that the impact would likely have raised the overall passing percentages. 
+        
     * Scores by school size
+        * As with the spending categories, we once again had to utilize ```pd.cut``` to categorize our dataframe based on three bins: Small (<1000 students), Medium (1000 - 2000 students) and Large (2000-5000 students). Similar to how we knew what type of spending Thomas High School has per student, we also know the number of students who attend Thomas High School - 1635. As a result, after creating our dataframe:
+        
+        INSERT BY SIZE HERE
+        
+        We can assume that it would likely the passing percentages for the medium schools that would likely be impacted by the change in Thomas High School. Further, as we know that the percentages increased for Thomas High School, we can make an assumption that the percentages increased. 
+        
     * Scores by school type
-
-* The top performing school based on overall percentage of students who passed math and reading - Cabrera High School
-* The lowest performing school based on overall percentage of students who passed math and reading - Rodriguez High School
-
-
+        * In this case, we know that Thomas HIgh School is classified as a charter. However, as we already have a "School Type" column in our ```per_school_summary_df``` dataframe, we can simply utilize ```.groupby```. We did so by utilizing the following code:
+        
+        ```
+        new_type_math_scores = per_school_summary_df.groupby(['School Type']).mean()['Average Math Score']
+        ```
+        This code allowed us to pull out the average math score based on the type of school that was present. We repeated this step on each of the columns of data we needed and compiled this into a dataframe:
+        
+        INSERT IMAGE HERE
+        
+        Once again, as before, we know that since the average passing rates of Thomas High School increased, it stands to reason that the passing percentages of the group that the school belongs to would also be impacted. In this case, it is likely that the Charter school type passing percentages rose. 
 
 ## Summary
-Summarizing four changes to the school district analysis after reading and math scores have been replaced.
+
+In conclusion, manipulating and changing the data for Thomas High School would likely lead to the following changes in analysis:
+
+1. The biggest most immeidate change to the analysis would be the top 5 schools within the district. When removing the results from the 9th grade, the overall passing percentage rose dramatically. This can certainly lead to a further investigation of the underlying factors of how the 9th grade is doing and, perhaps most importantly, a statistical analysis of data present within the 9th grade testing scores. 
+2. Another change that can be observed is in terms of the overall district. While the averages themselves were not impacted much, the passing percentages were. When consdering strategy for the school district, undesrstanding the tolerances that they may have towards budget and funding purposes would need to be investigated further. 
+3. In consideration for the groups that were presented (e.g., scores by school type) further analysis would be warranted as we consider the impact of Thomas High School on the passing metrics presented. One question that would need to be considered is simply how far does Thomas High School skew the data?
+4. Finally, as we already know that the top 5 schools were changed by the data present within Thomas High School, we can also make an assumption that likely the bottom 5 schools have changed as well. If this is the case, we would need to verify this information by comparing the two dataframes to see if this is indeed the case. Finally, if it is, then understanding how this impacts our strategy for the school district itself would require further investigation. 
